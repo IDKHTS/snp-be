@@ -21,9 +21,12 @@
   "homepage": "https://github.com/IDKHTS/snp-be#readme",
   "devDependencies": {
     "egg-bin": "^4.18.1",
-    "egg-mock": "^4.2.0"
+    "egg-mock": "^4.2.0",
+    "sequelize-cli": "^6.4.1"
   },
   "dependencies": {
-    "egg": "^2.33.1"
+    "egg": "^2.33.1",
+    "egg-sequelize": "^6.0.0",
+    "mysql2": "^2.3.3"
   }
 }
