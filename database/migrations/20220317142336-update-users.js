@@ -8,14 +8,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    const { INTEGER, DATE, STRING } = Sequelize
-    await queryInterface.createTable('users', {
-      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      name: STRING(30),
-      age: INTEGER,
-      created_at: DATE,
-      updated_at: DATE
-    })
+    queryInterface.addColumn('users', 'password', { type: Sequelize.STRING(255) })
   },
 
   async down (queryInterface, Sequelize) {
@@ -25,6 +18,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('users')
+    queryInterface.removeColumn('users', 'password')
   }
 }

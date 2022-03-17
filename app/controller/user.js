@@ -18,6 +18,10 @@ class UserController extends Controller {
       limit: toInt(ctx.query.limit),
       offset: toInt(ctx.query.offset)
     }
+    this.logger.info(ctx.query.id)
+    if (ctx.query.id) {
+      query.where = { id: toInt(ctx.query.id) }
+    }
     // this.logger.debug(ctx)
     ctx.body = await ctx.model.User.findAll(query)
   }
@@ -32,20 +36,22 @@ class UserController extends Controller {
   * @apiGroup User
   * @apiBody {String} email  email of the User
   * @apiBody {String} [password]   password of the User
-  * @apiBody {String} [nickname]   nickname of the User
+  * @apiBody {String} [name]   name of the User
   */
   async create () {
     const ctx = this.ctx
-    const { nickname, email, password } = ctx.request.body
-    const user = await ctx.model.User.create({ nickname, email, password })
+    const { name, email, password } = ctx.request.body
+    const user = await ctx.model.User.create({ name, email, password })
     ctx.status = 201
     ctx.body = user
   }
 
   /**
-  * @api {put} /user?id update users by ID
+  * @api {put} /user/:id update users by ID
   * @apiGroup User
-  * @apiParam {Number} id Users unique ID.
+  * @apiBody {String} email  email of the User
+  * @apiBody {String} [password]   password of the User
+  * @apiBody {String} [name]   name of the User
   */
   async update () {
     const ctx = this.ctx
@@ -56,13 +62,13 @@ class UserController extends Controller {
       return
     }
 
-    const { name, age } = ctx.request.body
-    await user.update({ name, age })
+    const { name, age, email, password } = ctx.request.body
+    await user.update({ name, age, email, password })
     ctx.body = user
   }
 
   /**
-  * @api {delete} /user?id delete users by id
+  * @api {delete} /user/:id delete users by id
   * @apiGroup User
   * @apiParam {Number} id Users unique ID.
   */

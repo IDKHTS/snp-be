@@ -1,6 +1,6 @@
 module.exports = (appInfo) => {
   return {
-    keys: 'a',
+    keys: 'a', // required, as session secret key
     logger: {
       // dir: path.resolve(appInfo.root, '/logs/demoapp'),
       level: 'DEBUG', // console all logs to logfile
@@ -15,6 +15,12 @@ module.exports = (appInfo) => {
       port: 3306,
       password: '123456',
       database: 'egg-sequelize-doc-default'
+    },
+
+    middleware: ['jwt'],
+    jwt: {
+      enable: false,
+      secret: '124'
     }
   }
 }

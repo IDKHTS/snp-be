@@ -8,7 +8,7 @@
     "cov": "egg-bin cov",
     "dev": "egg-bin dev",
     "lint": "eslint app test config --fix",
-    "doc": "apidoc -i app -o apidoc"
+    "doc": "apidoc -i app -o ./app/public/apidoc"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,9 @@
   },
   "dependencies": {
     "egg": "^2.33.1",
+    "egg-jwt": "^3.1.7",
     "egg-sequelize": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3"
   }
 }

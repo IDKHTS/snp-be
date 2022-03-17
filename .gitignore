@@ -110,3 +110,4 @@ logs/
 
 # apidoc
 apidoc/
+app/public/apidoc
