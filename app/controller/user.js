@@ -1,64 +1,83 @@
-const Controller = require('egg').Controller;
+const Controller = require('egg').Controller
 
-function toInt(str) {
-  if (typeof str === 'number') return str;
-  if (!str) return str;
-  return parseInt(str, 10) || 0;
+function toInt (str) {
+  if (typeof str === 'number') return str
+  if (!str) return str
+  return parseInt(str, 10) || 0
 }
 
 class UserController extends Controller {
-  async index() {
-    const ctx = this.ctx;
+  /**
+  * @api {get} /use?id get suser by id
+  * @apiGroup User
+  * @apiParam {Number} id Users unique ID.
+  */
+  async index () {
+    const ctx = this.ctx
     const query = {
       limit: toInt(ctx.query.limit),
-      offset: toInt(ctx.query.offset),
-    };
+      offset: toInt(ctx.query.offset)
+    }
     // this.logger.debug(ctx)
-    this.logger.debug(this.app.config)
-    this.logger.debug(this.app.config.delegate)
-    this.logger.debug(ctx.model)
-    ctx.body = await ctx.model.User.findAll(query);
+    ctx.body = await ctx.model.User.findAll(query)
   }
 
-  async show() {
-    const ctx = this.ctx;
-    ctx.body = await ctx.model.User.findByPk(toInt(ctx.params.id));
+  async show () {
+    const ctx = this.ctx
+    ctx.body = await ctx.model.User.findByPk(toInt(ctx.params.id))
   }
 
-  async create() {
-    const ctx = this.ctx;
-    const { name, age } = ctx.request.body;
-    const user = await ctx.model.User.create({ name, age });
-    ctx.status = 201;
-    ctx.body = user;
+  /**
+  * @api {post} /user create users
+  * @apiGroup User
+  * @apiBody {String} email  email of the User
+  * @apiBody {String} [password]   password of the User
+  * @apiBody {String} [nickname]   nickname of the User
+  */
+  async create () {
+    const ctx = this.ctx
+    const { nickname, email, password } = ctx.request.body
+    const user = await ctx.model.User.create({ nickname, email, password })
+    ctx.status = 201
+    ctx.body = user
   }
 
-  async update() {
-    const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
-    const user = await ctx.model.User.findByPk(id);
+  /**
+  * @api {put} /user?id update users by ID
+  * @apiGroup User
+  * @apiParam {Number} id Users unique ID.
+  */
+  async update () {
+    const ctx = this.ctx
+    const id = toInt(ctx.params.id)
+    const user = await ctx.model.User.findByPk(id)
     if (!user) {
-      ctx.status = 404;
-      return;
+      ctx.status = 404
+      return
     }
 
-    const { name, age } = ctx.request.body;
-    await user.update({ name, age });
-    ctx.body = user;
+    const { name, age } = ctx.request.body
+    await user.update({ name, age })
+    ctx.body = user
   }
 
-  async destroy() {
-    const ctx = this.ctx;
-    const id = toInt(ctx.params.id);
-    const user = await ctx.model.User.findByPk(id);
+  /**
+  * @api {delete} /user?id delete users by id
+  * @apiGroup User
+  * @apiParam {Number} id Users unique ID.
+  */
+  async destroy () {
+    const ctx = this.ctx
+    const id = toInt(ctx.params.id)
+    const user = await ctx.model.User.findByPk(id)
     if (!user) {
-      ctx.status = 404;
-      return;
+      ctx.status = 404
+      return
     }
 
-    await user.destroy();
-    ctx.status = 200;
+    await user.destroy()
+    ctx.status = 200
   }
 }
 
-module.exports = UserController;
+module.exports = UserController

@@ -106,3 +106,7 @@ dist
 # Egg run / logs
 run/
 logs/
+
+
+# apidoc
+apidoc/
